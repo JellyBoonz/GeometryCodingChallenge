@@ -14,14 +14,14 @@ namespace ShapeCalculator
                 string shapeType = shapeData[1];
                 float area = 0.0f;
                 float perceivedArea = 0.0f;
-
                 float perimeter = 0.0f;
                 float perceivedPerimeter = 0.0f;
-
                 (float X, float Y) centroid = (0.0f, 0.0f);
 
                 float centerX = float.Parse(shapeData[3]);
                 float centerY = float.Parse(shapeData[5]);
+
+                string vertexData = ""; // Initialize the vertex data string
 
                 switch (shapeType)
                 {
@@ -40,7 +40,7 @@ namespace ShapeCalculator
                         area = triangle.CalculateArea();
                         perimeter = triangle.CalculatePerimeter();
                         centroid = triangle.CalculateCentroid();
-
+                        vertexData = string.Join(";", triangle.GetVertices().Select(v => $"{v.X},{v.Y}"));
                         Graphing.DrawShape(triangle, $"./Images/triangle_{i}.png");
                         break;
 
@@ -52,7 +52,7 @@ namespace ShapeCalculator
                         area = ellipse.CalculateArea();
                         perimeter = ellipse.CalculatePerimeter();
                         centroid = ellipse.CalculateCentroid();
-
+                        vertexData = string.Join(";", ellipse.GetVertices().Select(v => $"{v.X},{v.Y}"));
                         Graphing.DrawEllipse(ellipse, $"./Images/ellipse_{i}.png");
                         break;
 
@@ -63,40 +63,35 @@ namespace ShapeCalculator
                         area = square.CalculateArea();
                         perimeter = square.CalculatePerimeter();
                         centroid = square.CalculateCentroid();
-
+                        vertexData = string.Join(";", square.GetVertices().Select(v => $"{v.X},{v.Y}"));
                         Graphing.DrawShape(square, $"./Images/square_{i}.png");
                         break;
 
                     case "Polygon":
-                        // Calculate the number of vertices
                         var polygonData = data[i].Split(',');
                         int numberOfVertices = (polygonData.Length - 2) / 4;
-
-                        // Create an array to store the vertices
                         (float X, float Y)[] vertices = new (float X, float Y)[numberOfVertices];
 
                         for (int j = 0, k = 2; j < numberOfVertices; j++, k += 4)
                         {
                             float x = float.Parse(polygonData[k + 1]);
                             float y = float.Parse(polygonData[k + 3]);
-
                             vertices[j] = (x, y);
                         }
                         var polygon = new Polygon(centerX, centerY, vertices);
                         area = polygon.CalculateArea();
                         perceivedArea = area;
-
                         perimeter = polygon.CalculatePerimeter();
                         perceivedPerimeter = perimeter;
-
                         centroid = polygon.CalculateCentroid();
                         break;
 
                     default:
                         throw new ArgumentException($"Unknown shape type: {shapeType}");
                 }
+
                 outputData.Add(new string[] {
-                    (i + 1).ToString(), shapeType, "Area", area.ToString(), "perimeter", perimeter.ToString(), "Centroid", centroid.ToString()
+                    (i + 1).ToString(), shapeType, "Area", area.ToString(), "Perimeter", perimeter.ToString(), "Centroid", $"{centroid.X},{centroid.Y}", "Vertices", vertexData
                 });
             }
 
