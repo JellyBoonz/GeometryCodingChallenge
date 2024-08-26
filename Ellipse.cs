@@ -21,6 +21,10 @@ namespace ShapeCalculator
         }
 
         public override (float X, float Y) CalculateCentroid() => Center;
-    }
 
+        public (float X, float Y)[] GetVertices
+        {
+
+        }
+    }
 }

@@ -50,6 +50,10 @@
             "MSTest.TestFramework": {
               "target": "Package",
               "version": "[3.5.2, )"
+            },
+            "SkiaSharp": {
+              "target": "Package",
+              "version": "[2.88.8, )"
             }
           },
           "imports": [

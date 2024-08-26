@@ -6,6 +6,8 @@ namespace ShapeCalculator
         {
             List<string[]> outputData = new List<string[]>();
 
+            int graphFlag = 0;
+
             for (int i = 0; i < data.Length; i++)
             {
                 data[i] = data[i].TrimEnd(',');
@@ -29,11 +31,7 @@ namespace ShapeCalculator
                         float radius = float.Parse(shapeData[7]);
                         var circle = new Circle(centerX, centerY, radius);
                         area = circle.CalculateArea();
-                        perceivedArea = area;
-
                         perimeter = circle.CalculatePerimeter();
-                        perceivedPerimeter = perimeter;
-
                         centroid = circle.CalculateCentroid();
                         break;
 
@@ -42,12 +40,14 @@ namespace ShapeCalculator
                         float orientation = float.Parse(shapeData[9]);
                         var triangle = new EquilateralTriangle(centerX, centerY, orientation, sideLengthTriangle);
                         area = triangle.CalculateArea();
-                        perceivedArea = triangle.CalculateRotatedArea();
-
                         perimeter = triangle.CalculatePerimeter();
-                        // perceivedPerimeter = triangle.CalculateRotatedPerimeter();
-
                         centroid = triangle.CalculateCentroid();
+
+                        // if (graphFlag == 0)
+                        // {
+                        //     Graphing.DrawTriangleWithCartesianGrid(triangle, $"./Images/triangle_{i}.png");
+                        //     graphFlag++;
+                        // }
                         break;
 
                     case "Ellipse":
@@ -57,14 +57,29 @@ namespace ShapeCalculator
                         area = ellipse.CalculateArea();
                         perimeter = ellipse.CalculatePerimeter();
                         centroid = ellipse.CalculateCentroid();
+
+                        if (graphFlag == 0 || graphFlag == 1 || graphFlag == 2)
+                        {
+                            Graphing.DrawShapeWithCartesianGrid(ellipse, $"./Images/ellipse_{i}.png");
+                            graphFlag++;
+                        }
+
                         break;
 
                     case "Square":
                         float sideLengthSquare = float.Parse(shapeData[7]);
-                        var square = new Square(centerX, centerY, sideLengthSquare);
+                        orientation = float.Parse(shapeData[9]);
+                        var square = new Square(centerX, centerY, sideLengthSquare, orientation);
                         area = square.CalculateArea();
                         perimeter = square.CalculatePerimeter();
                         centroid = square.CalculateCentroid();
+
+                        if (graphFlag == 0 || graphFlag == 1 || graphFlag == 2)
+                        {
+                            Graphing.DrawShapeWithCartesianGrid(square, $"./Images/square_{i}.png");
+                            graphFlag++;
+                        }
+
                         break;
 
                     case "Polygon":
@@ -96,9 +111,7 @@ namespace ShapeCalculator
                         throw new ArgumentException($"Unknown shape type: {shapeType}");
                 }
                 outputData.Add(new string[] {
-                    (i + 1).ToString(), shapeType, "Area", area.ToString(), "perimeter", perimeter.ToString(),
-                    "Centroid", centroid.ToString(), "Perceived Area", perceivedArea.ToString(), "Perceived Perimeter",
-                    perceivedPerimeter.ToString()
+                    (i + 1).ToString(), shapeType, "Area", area.ToString(), "perimeter", perimeter.ToString(), "Centroid", centroid.ToString()
                 });
             }
 

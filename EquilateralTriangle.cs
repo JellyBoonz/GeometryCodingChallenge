@@ -1,3 +1,6 @@
+using System.Net.NetworkInformation;
+using Microsoft.Testing.Platform.Extensions.Messages;
+
 namespace ShapeCalculator
 {
     public class EquilateralTriangle : Shape
@@ -18,44 +21,41 @@ namespace ShapeCalculator
 
         public override (float X, float Y) CalculateCentroid() => Center;
 
-        public float CalculateRotatedArea()
+        public (float X, float Y)[] GetVertices()
         {
-            // Step 1: Compute the vertices of the equilateral triangle
-            var halfHeight = (MathF.Sqrt(3) / 2) * SideLength;
-            var vertex1 = (X: Center.X, Y: Center.Y + 2 * halfHeight / 3, Z: 0f);
-            var vertex2 = (X: Center.X - SideLength / 2, Y: Center.Y - halfHeight / 3, Z: 0f);
-            var vertex3 = (X: Center.X + SideLength / 2, Y: Center.Y - halfHeight / 3, Z: 0f);
+            // Calculate the distance from the centroid to a vertex
+            float r = MathF.Sqrt(3) / 3 * SideLength;
 
-            // Step 2: Apply rotation around the y-axis
-            vertex1 = RotatePointAroundYAxis(vertex1, Orientation);
-            vertex2 = RotatePointAroundYAxis(vertex2, Orientation);
-            vertex3 = RotatePointAroundYAxis(vertex3, Orientation);
-
-            // Step 3: Project the points to the xy-plane (ignore Z)
-            var projectedVertex1 = (X: vertex1.X, Y: vertex1.Y);
-            var projectedVertex2 = (X: vertex2.X, Y: vertex2.Y);
-            var projectedVertex3 = (X: vertex3.X, Y: vertex3.Y);
-
-            // Step 4: Calculate the area of the triangle
-            return MathF.Abs(
-                0.5f * (projectedVertex1.X * (projectedVertex2.Y - projectedVertex3.Y) +
-                        projectedVertex2.X * (projectedVertex3.Y - projectedVertex1.Y) +
-                        projectedVertex3.X * (projectedVertex1.Y - projectedVertex2.Y))
+            // Calculate the first vertex V1 on the x-axis with the given orientation in radians
+            var V1 = (
+                r * MathF.Cos(Orientation),
+                r * MathF.Sin(Orientation)
             );
+
+            // Calculate the second vertex V2 by rotating V1 by 120 degrees (2π/3 radians)
+            var V2 = RotatePoint(V1.Item1, V1.Item2, 2 * MathF.PI / 3);
+
+            // Calculate the third vertex V3 by rotating V1 by 240 degrees (4π/3 radians)
+            var V3 = RotatePoint(V1.Item1, V1.Item2, 4 * MathF.PI / 3);
+
+            // Translate the vertices to the given center
+            V1 = (Center.X + V1.Item1, Center.Y + V1.Item2);
+            V2 = (Center.X + V2.Item1, Center.Y + V2.Item2);
+            V3 = (Center.X + V3.Item1, Center.Y + V3.Item2);
+
+            return [V1, V2, V3];
         }
 
-        // public float CalculateRotatedPerimeter()
-        // {
-
-        // }
-
-        private (float X, float Y, float Z) RotatePointAroundYAxis((float X, float Y, float Z) point, float angle)
+        private static (float, float) RotatePoint(float x, float y, float angleRad)
         {
-            float cosTheta = MathF.Cos(angle);
-            float sinTheta = MathF.Sin(angle);
-            float xNew = cosTheta * point.X + sinTheta * point.Z;
-            float zNew = -sinTheta * point.X + cosTheta * point.Z;
-            return (xNew, point.Y, zNew);
+            float cosAngle = MathF.Cos(angleRad);
+            float sinAngle = MathF.Sin(angleRad);
+
+            float xNew = x * cosAngle - y * sinAngle;
+            float yNew = x * sinAngle + y * cosAngle;
+
+            return (xNew, yNew);
         }
+
     }
 }

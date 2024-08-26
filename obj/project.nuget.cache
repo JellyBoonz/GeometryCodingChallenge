@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "cYqPMXCH6aY=",
+  "dgSpecHash": "Nmdi+0bDiLQ=",
   "success": true,
   "projectFilePath": "/Users/jaidenortiz/gentex-coding-challenge/CodingChallenge/CodingChallenge.csproj",
   "expectedPackageFiles": [
@@ -13,6 +13,9 @@
     "/Users/jaidenortiz/.nuget/packages/microsoft.testplatform.objectmodel/17.10.0/microsoft.testplatform.objectmodel.17.10.0.nupkg.sha512",
     "/Users/jaidenortiz/.nuget/packages/mstest.testadapter/3.5.2/mstest.testadapter.3.5.2.nupkg.sha512",
     "/Users/jaidenortiz/.nuget/packages/mstest.testframework/3.5.2/mstest.testframework.3.5.2.nupkg.sha512",
+    "/Users/jaidenortiz/.nuget/packages/skiasharp/2.88.8/skiasharp.2.88.8.nupkg.sha512",
+    "/Users/jaidenortiz/.nuget/packages/skiasharp.nativeassets.macos/2.88.8/skiasharp.nativeassets.macos.2.88.8.nupkg.sha512",
+    "/Users/jaidenortiz/.nuget/packages/skiasharp.nativeassets.win32/2.88.8/skiasharp.nativeassets.win32.2.88.8.nupkg.sha512",
     "/Users/jaidenortiz/.nuget/packages/system.diagnostics.diagnosticsource/5.0.0/system.diagnostics.diagnosticsource.5.0.0.nupkg.sha512",
     "/Users/jaidenortiz/.nuget/packages/system.reflection.metadata/1.6.0/system.reflection.metadata.1.6.0.nupkg.sha512"
   ],

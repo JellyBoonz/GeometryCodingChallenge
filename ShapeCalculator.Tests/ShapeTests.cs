@@ -42,7 +42,7 @@ namespace ShapeCalculator.Tests
         [TestMethod]
         public void SquareCalculations()
         {
-            var square = new Square(2, 2, 4);
+            var square = new Square(2, 2, 4, 0);
 
             Assert.AreEqual(16, square.CalculateArea(), Epsilon);
             Assert.AreEqual(16, square.CalculatePerimeter(), Epsilon);
