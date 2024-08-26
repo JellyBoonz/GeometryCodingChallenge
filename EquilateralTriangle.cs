@@ -3,7 +3,7 @@ using Microsoft.Testing.Platform.Extensions.Messages;
 
 namespace ShapeCalculator
 {
-    public class EquilateralTriangle : Shape
+    public class EquilateralTriangle : Shape, IGraphingShape
     {
         public float SideLength { get; set; }
         public float Orientation { get; set; }

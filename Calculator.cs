@@ -6,8 +6,6 @@ namespace ShapeCalculator
         {
             List<string[]> outputData = new List<string[]>();
 
-            int graphFlag = 0;
-
             for (int i = 0; i < data.Length; i++)
             {
                 data[i] = data[i].TrimEnd(',');
@@ -43,27 +41,19 @@ namespace ShapeCalculator
                         perimeter = triangle.CalculatePerimeter();
                         centroid = triangle.CalculateCentroid();
 
-                        // if (graphFlag == 0)
-                        // {
-                        //     Graphing.DrawTriangleWithCartesianGrid(triangle, $"./Images/triangle_{i}.png");
-                        //     graphFlag++;
-                        // }
+                        Graphing.DrawShape(triangle, $"./Images/triangle_{i}.png");
                         break;
 
                     case "Ellipse":
                         float longRadius = float.Parse(shapeData[7]);
                         float shortRadius = float.Parse(shapeData[9]);
-                        var ellipse = new Ellipse(centerX, centerY, longRadius, shortRadius);
+                        orientation = float.Parse(shapeData[11]);
+                        var ellipse = new Ellipse(centerX, centerY, longRadius, shortRadius, orientation);
                         area = ellipse.CalculateArea();
                         perimeter = ellipse.CalculatePerimeter();
                         centroid = ellipse.CalculateCentroid();
 
-                        if (graphFlag == 0 || graphFlag == 1 || graphFlag == 2)
-                        {
-                            Graphing.DrawShapeWithCartesianGrid(ellipse, $"./Images/ellipse_{i}.png");
-                            graphFlag++;
-                        }
-
+                        Graphing.DrawEllipse(ellipse, $"./Images/ellipse_{i}.png");
                         break;
 
                     case "Square":
@@ -74,12 +64,7 @@ namespace ShapeCalculator
                         perimeter = square.CalculatePerimeter();
                         centroid = square.CalculateCentroid();
 
-                        if (graphFlag == 0 || graphFlag == 1 || graphFlag == 2)
-                        {
-                            Graphing.DrawShapeWithCartesianGrid(square, $"./Images/square_{i}.png");
-                            graphFlag++;
-                        }
-
+                        Graphing.DrawShape(square, $"./Images/square_{i}.png");
                         break;
 
                     case "Polygon":

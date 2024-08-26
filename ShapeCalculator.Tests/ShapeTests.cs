@@ -31,7 +31,7 @@ namespace ShapeCalculator.Tests
         [TestMethod]
         public void EllipseCalculations()
         {
-            var ellipse = new Ellipse(5, 5, 10, 5);
+            var ellipse = new Ellipse(5, 5, 10, 5, 0);
 
             Assert.AreEqual(Math.PI * 50, ellipse.CalculateArea(), Epsilon);
             // Approximation of ellipse perimeter
