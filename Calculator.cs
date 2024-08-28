@@ -41,7 +41,7 @@ namespace ShapeCalculator
                         perimeter = triangle.CalculatePerimeter();
                         centroid = triangle.CalculateCentroid();
                         vertexData = FormatVertexData(triangle.GetVertices());
-                        Graphing.DrawShape(triangle, $"./Images/triangle_{i}.png");
+                        Graphing.DrawShape(triangle, $"./Images/triangles/triangle_{i}.png");
                         break;
 
                     case "Ellipse":
@@ -53,7 +53,7 @@ namespace ShapeCalculator
                         perimeter = ellipse.CalculatePerimeter();
                         centroid = ellipse.CalculateCentroid();
                         vertexData = FormatVertexData(ellipse.GetVertices());
-                        Graphing.DrawEllipse(ellipse, $"./Images/ellipse_{i}.png");
+                        Graphing.DrawEllipse(ellipse, $"./Images/ellipses/ellipse_{i}.png");
                         break;
 
                     case "Square":
@@ -64,7 +64,7 @@ namespace ShapeCalculator
                         perimeter = square.CalculatePerimeter();
                         centroid = square.CalculateCentroid();
                         vertexData = FormatVertexData(square.GetVertices());
-                        Graphing.DrawShape(square, $"./Images/square_{i}.png");
+                        Graphing.DrawShape(square, $"./Images/squares/square_{i}.png");
                         break;
 
                     case "Polygon":
@@ -104,7 +104,7 @@ namespace ShapeCalculator
             var formattedVertices = new List<string>();
             for (int i = 0; i < vertices.Length; i++)
             {
-                formattedVertices.Add($" V{i + 1} ({vertices[i].X} : {vertices[i].Y}), ");
+                formattedVertices.Add($" V{i + 1}, ({vertices[i].X} : {vertices[i].Y}), ");
             }
             return string.Join("", formattedVertices);
         }
