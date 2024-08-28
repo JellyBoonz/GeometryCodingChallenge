@@ -40,7 +40,7 @@ namespace ShapeCalculator
                         area = triangle.CalculateArea();
                         perimeter = triangle.CalculatePerimeter();
                         centroid = triangle.CalculateCentroid();
-                        vertexData = string.Join(";", triangle.GetVertices().Select(v => $"{v.X},{v.Y}"));
+                        vertexData = FormatVertexData(triangle.GetVertices());
                         Graphing.DrawShape(triangle, $"./Images/triangle_{i}.png");
                         break;
 
@@ -52,7 +52,7 @@ namespace ShapeCalculator
                         area = ellipse.CalculateArea();
                         perimeter = ellipse.CalculatePerimeter();
                         centroid = ellipse.CalculateCentroid();
-                        vertexData = string.Join(";", ellipse.GetVertices().Select(v => $"{v.X},{v.Y}"));
+                        vertexData = FormatVertexData(ellipse.GetVertices());
                         Graphing.DrawEllipse(ellipse, $"./Images/ellipse_{i}.png");
                         break;
 
@@ -63,7 +63,7 @@ namespace ShapeCalculator
                         area = square.CalculateArea();
                         perimeter = square.CalculatePerimeter();
                         centroid = square.CalculateCentroid();
-                        vertexData = string.Join(";", square.GetVertices().Select(v => $"{v.X},{v.Y}"));
+                        vertexData = FormatVertexData(square.GetVertices());
                         Graphing.DrawShape(square, $"./Images/square_{i}.png");
                         break;
 
@@ -84,6 +84,7 @@ namespace ShapeCalculator
                         perimeter = polygon.CalculatePerimeter();
                         perceivedPerimeter = perimeter;
                         centroid = polygon.CalculateCentroid();
+                        vertexData = FormatVertexData(vertices);
                         break;
 
                     default:
@@ -96,6 +97,16 @@ namespace ShapeCalculator
             }
 
             return outputData;
+        }
+
+        private string FormatVertexData((float X, float Y)[] vertices)
+        {
+            var formattedVertices = new List<string>();
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                formattedVertices.Add($" V{i + 1} ({vertices[i].X} : {vertices[i].Y}), ");
+            }
+            return string.Join("", formattedVertices);
         }
     }
 }
